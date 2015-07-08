@@ -13,4 +13,20 @@
     <br>
     <label rui-helptext data="helptextdata" style="font-size:40px;">Chaa</label>
 	</div>
+  <div>
+    <h2>Cards</h2>
+    <h4>rui-card</h4>
+    <rui-card ref="dashboard.organization.index({orgId: org.id})">
+      Sample Organization 1
+    </rui-card>
+    <rui-card ref="dashboard.organization.index({orgId: org.id})">
+      Sample Organization 2
+    </rui-card>
+    <br>
+    <div style="clear:both;"></div>
+    <h4>rui-card-create</h4>
+    <rui-card-create create-fn="samplecreate(name)">
+      Create Organization
+    </rui-card-create>
+  </div>
 </div>

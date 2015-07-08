@@ -2,8 +2,5 @@
 @import "_button.scss";
 @import "_tooltip.scss";
 @import "_helptext.scss";
-
-body > div{
-  width: 1000px;
-  margin: auto;
-}
+@import "_card.scss";
+@import "_typography.scss";

@@ -1,0 +1,45 @@
+@font-face{
+	font-family: Nexa;
+	font-weight: lighter;
+	src: url('../fonts/Nexa-Light.otf') format("opentype");
+}
+@font-face {
+	font-family: Nexa;
+	font-weight: bold;
+	src: url('../fonts/Nexa-Bold.otf') format("opentype");
+}
+
+body, h1, h2, h3, h4, h5, h6, p {
+	font-family: 'Nexa', 'sans-serif';
+	font-weight: lighter;
+}
+
+h1{
+	font-size: 48px;
+}
+h2{
+	font-size: 36px;
+}
+h3{
+	font-size: 32px;
+}
+h4{
+	font-size: 28px;
+}
+h5{
+	font-size: 24px;
+}
+p{
+	font-size: 14px;
+}
+
+a {
+	color: $green;
+}
+a:hover{
+	background-color: transparent;
+	color: $darkgreen;
+}
+a[ng-click] {
+	cursor: pointer;
+}

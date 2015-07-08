@@ -40,6 +40,14 @@ module.exports = function(grunt) {
 					dest: '.tmp/bower_components'
 				}]
 			},
+			fonts: {
+				files:[{
+					expand: true,
+					cwd: 'src/fonts',
+					src:['**/*.otf'],
+					dest: '.tmp/fonts'
+				}]
+			},
 			dist: {
 				files: [{
 					expand: true,
