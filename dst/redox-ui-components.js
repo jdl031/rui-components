@@ -4,10 +4,9 @@ angular.module('ruiComponents')
   .controller('ruiAppController', ['$scope', function($scope){
 
     // Buttons
-    $scope.buttonClickedCnt = 0;
-    $scope.buttonClicked = function (msg) {
-      $scope.buttonClickedCnt++;
-      console.log('clicked! ', msg, $scope.buttonClickedCnt);
+    $scope.clickCnt = 0;
+    $scope.incrementClickCnt = function (msg) {
+      $scope.clickCnt++;
     };
 
     $scope.dropdownOptions = [ 'abc', 'def', 'ghi', 'jkl'];
@@ -29,6 +28,7 @@ angular.module('ruiComponents')
         ? null
         : { title: 'OMG', message: 'tragic alert ' + counter++ };
     };
+    $scope.toggleAlert();
 
     // Chips
     $scope.tags = [
@@ -330,31 +330,76 @@ angular.module('ruiComponents').run(['$templateCache', function($templateCache) 
   'use strict';
 
   $templateCache.put('templates/_all.html',
-    "<div ng-controller=\"ruiAppController\">\n" +
+    "<div ng-controller=\"ruiAppController\" style=\"width:1000px;margin:auto;\">\n" +
+    "  <h1>The Definitive Redox UI Component Handbook <br>\n" +
+    "    <small>Demonstrations of and Guidelines for the Various and Assorted Wonders of the Redox UI</small>\n" +
+    "  </h1>\n" +
+    "\n" +
     "  <div>\n" +
-    "    <h2>Buttons</h2>\n" +
-    "    <p>Clicks: {{buttonClickedCnt}}</p>\n" +
-    "    <h3>Primary, Secondary, Default</h3>\n" +
-    "    <rui-button primary ng-click=\"buttonClicked()\">Primary</rui-button>\n" +
-    "    <rui-button secondary ng-click=\"buttonClicked()\">Secondary</rui-button>\n" +
-    "    <rui-button ng-click=\"buttonClicked()\">Default</rui-button>\n" +
-    "    <h3>Disabled</h3>\n" +
-    "    <p>These buttons are disabled when the click count is even</p>\n" +
+    "    <h2 class=\"page-header\">Getting Started</h2>\n" +
+    "    <p>\n" +
+    "      First get the components: <code>bower install rui-components</code>\n" +
+    "    </p>\n" +
+    "    <p>\n" +
+    "      Then, make sure you have the dependencies:\n" +
+    "    </p>\n" +
+    "    <ul>\n" +
+    "      <li>Angular</li>\n" +
+    "      <li>Bootstrap</li>\n" +
+    "      <li>Ionicons</li>\n" +
+    "      <li>Tinycolor (for rui-chips)</li>\n" +
+    "    </ul>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <div>\n" +
+    "    <h2 class=\"page-header\">Buttons: <code>rui-button</code></h2>\n" +
+    "    <p>\n" +
+    "      We have three standard types of buttons:\n" +
+    "    </p>\n" +
+    "    <rui-button primary ng-click=\"incrementClickCnt()\">Primary</rui-button>\n" +
+    "    <rui-button secondary ng-click=\"incrementClickCnt()\">Secondary</rui-button>\n" +
+    "    <rui-button ng-click=\"incrementClickCnt()\">Default</rui-button>\n" +
+    "    <p>\n" +
+    "      Use primary for the primary action(s) the user will want to take on a page: e.g. submitting a form. Use secondary for the actions you user might want to take but that are not the primary actions on a page. Use default for everything else, which should be most things.\n" +
+    "    </p>\n" +
+    "    <p>\n" +
+    "      Using primary or secondary is a recommendation to the user, so don't place them side by side. That's confusing. If paired with another button (e.g. save, cancel), the other button should be the default style.\n" +
+    "    </p>\n" +
+    "    <p>\n" +
+    "      Indicate which type of button you want by adding a <code>primary</code> or <code>secondary</code> attribute, or leaving them off to get the default styling:\n" +
+    "    </p>\n" +
+    "    <pre ng-non-bindable>\n" +
+    "      <code data-language=\"html\">\n" +
+    "        Coming soon...\n" +
+    "      </code>\n" +
+    "    </pre>\n" +
+    "    <p>\n" +
+    "      Use <code>ng-click</code> as usual to register click handlers. Clicking any of the buttons in this section increments the click count: {{clickCnt}}\n" +
+    "    </p>\n" +
+    "    <p>\n" +
+    "      Disable a button with <code>ng-disable</code>, as you would a normal button. Each style button looks different when disabled:\n" +
+    "    </p>\n" +
     "    <rui-button primary\n" +
-    "                ng-click=\"buttonClicked()\"\n" +
-    "                ng-disabled=\"buttonClickedCnt % 2 === 0\">\n" +
+    "                ng-click=\"incrementClickCnt()\"\n" +
+    "                ng-disabled=\"!enableButtons\">\n" +
     "      Primary\n" +
     "    </rui-button>\n" +
     "    <rui-button secondary\n" +
-    "                ng-click=\"buttonClicked()\"\n" +
-    "                ng-disabled=\"buttonClickedCnt % 2 === 0\">\n" +
+    "                ng-click=\"incrementClickCnt()\"\n" +
+    "                ng-disabled=\"!enableButtons\">\n" +
     "      Secondary\n" +
     "    </rui-button>\n" +
-    "    <rui-button ng-click=\"buttonClicked()\"\n" +
-    "                ng-disabled=\"buttonClickedCnt % 2 === 0\">\n" +
+    "    <rui-button ng-click=\"incrementClickCnt()\"\n" +
+    "                ng-disabled=\"!enableButtons\">\n" +
     "      Default\n" +
     "    </rui-button>\n" +
-    "    <h3>Dropdowns</h3>\n" +
+    "    <p>\n" +
+    "      Button state: <input rui-toggle type=\"checkbox\" id=\"disableBtns\"  ng-model=\"enableButtons\" on-text=\"enabled\" off-text=\"disabled\">\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <p>\n" +
+    "      You can also have a dropdown with your <code>rui-button</code>:\n" +
+    "    </p>\n" +
     "    <rui-button type=\"button\" class=\"context-button\" ng-model=\"dropdownSelection\"\n" +
     "      bs-options=\"option as option for option in dropdownOptions\"\n" +
     "      bs-select>\n" +
@@ -364,7 +409,13 @@ angular.module('ruiComponents').run(['$templateCache', function($templateCache) 
     "  </div>\n" +
     "\n" +
     "\t<div>\n" +
-    "\t\t<h2>Help Text</h2>\n" +
+    "\t\t<h2 class=\"page-header\">Help Text: <code>rui-helptext</code></h2>\n" +
+    "    <p>\n" +
+    "      Tuck help text in a convenient yet out-of-the-way place with <code>rui-helptext</code>. Use it primarily in form fields, attached to the label, to help the user fill out the form.\n" +
+    "    </p>\n" +
+    "    <p>\n" +
+    "      Add an <code>rui-helptext</code> attribute to the element you want supplemented with help text. Use either the <code>message</code> or <code>data</code> attribute to specify the help text. <code>message</code> takes a string of helptext. <code>data</code> take an expression (such as a scope variable) that evaluates to help text.\n" +
+    "    </p>\n" +
     "\t\t<label rui-helptext message=\"This is the help text sample text for helping with the text of samples.\" style=\"font-size:30px;\">Chya</label>\n" +
     "    <br/>\n" +
     "\t\t<label rui-helptext data=\"helptextdata\" style=\"font-size:20px;\">Chya</label>\n" +
@@ -373,83 +424,103 @@ angular.module('ruiComponents').run(['$templateCache', function($templateCache) 
     "\t</div>\n" +
     "\n" +
     "  <div>\n" +
-    "    <h2>Cards</h2>\n" +
-    "    <h4>rui-card</h4>\n" +
+    "    <h2 class=\"page-header\">Cards: <code>rui-card</code></h2>\n" +
     "    <rui-card ref=\"dashboard.organization.index({orgId: org.id})\">\n" +
     "      Sample Organization 1\n" +
     "    </rui-card>\n" +
     "    <rui-card ref=\"dashboard.organization.index({orgId: org.id})\">\n" +
     "      Sample Organization 2\n" +
     "    </rui-card>\n" +
-    "    <br>\n" +
-    "    <div style=\"clear:both;\"></div>\n" +
-    "    <h4>rui-card-create</h4>\n" +
+    "    <div style=\"visibility:hidden;display:block;height:0;clear:both;\"></div>\n" +
+    "\n" +
+    "    <h2 class=\"page-header\">Create Card: <code>rui-card-create</code></h2>\n" +
     "    <rui-card-create create-fn=\"samplecreate(name)\">\n" +
     "      Create Organization\n" +
     "    </rui-card-create>\n" +
+    "      <div style=\"visibility:hidden;display:block;height:0;clear:both;\"></div>\n" +
     "  </div>\n" +
     "\n" +
-    "  <h2>Alerts</h2>\n" +
-    "  <button ng-click=\"toggleAlert()\">Toggle Alert</button>\n" +
-    "  <rui-alert message=\"alert.message\"></rui-alert>\n" +
-    "  <div ng-repeat=\"type in ['info', 'warning', 'danger', 'success']\">\n" +
-    "    <rui-alert title=\"alert.title\"\n" +
-    "               message=\"alert.message\"\n" +
-    "               type=\"type\"\n" +
-    "               show-contact=\"true\">\n" +
-    "    </rui-alert>\n" +
-    "  </div>\n" +
-    "  <h2>Tags</h2>\n" +
-    "  <button ng-click=\"addTag()\">Add Tag</button>\n" +
     "  <div>\n" +
-    "    <rui-chip ng-repeat=\"tag in tags\"\n" +
-    "              name=\"tag.name\"\n" +
-    "              color=\"tag.color\"\n" +
-    "              on-remove=\"removeTag(tag, $index)\">\n" +
-    "    </rui-chip>\n" +
-    "  </div>\n" +
-    "  <h2>Toggles</h2>\n" +
-    "  <form name=\"toggleTestForm\" ng-submit=\"logToggle()\" novalidate>\n" +
-    "    <div>\n" +
-    "      <label>Disable next toggle?</label>\n" +
-    "      <input rui-toggle\n" +
-    "             type=\"checkbox\"\n" +
-    "             id=\"toggle1\"\n" +
-    "             name=\"toggle1\"\n" +
-    "             ng-model=\"toggle1\"\n" +
-    "             ng-change=\"incrementToggleCount()\"\n" +
-    "             />\n" +
-    "      Toggle1: {{toggle1}}\n" +
-    "\n" +
+    "    <h2 class=\"page-header\">Alerts: <code>rui-alert</code></h2>\n" +
+    "    <p>\n" +
+    "      Use <code>rui-alert</code> as an element to display alerts, such as error messages, success messages, or anything else you want to call to the user's attention.\n" +
+    "    </p>\n" +
+    "    <rui-button ng-click=\"toggleAlert()\">Toggle Alerts</rui-button>\n" +
+    "    <rui-alert message=\"alert.message\"></rui-alert>\n" +
+    "    <div ng-repeat=\"type in ['info', 'warning', 'danger', 'success']\">\n" +
+    "      <rui-alert title=\"alert.title\"\n" +
+    "                 message=\"alert.message\"\n" +
+    "                 type=\"type\"\n" +
+    "                 show-contact=\"true\">\n" +
+    "      </rui-alert>\n" +
     "    </div>\n" +
+    "    <h2>Tags</h2>\n" +
+    "    <button ng-click=\"addTag()\">Add Tag</button>\n" +
     "    <div>\n" +
-    "      <label>Test toggle 2: </label>\n" +
-    "      <input rui-toggle\n" +
-    "             type=\"checkbox\"\n" +
-    "             id=\"toggle2\"\n" +
-    "             name=\"toggle2\"\n" +
-    "             ng-model=\"toggle2\"\n" +
-    "             on-text=\"on\"\n" +
-    "             off-text=\"off\"\n" +
-    "             ng-disabled=\"toggle1\"\n" +
-    "             ng-true-value=\"'on'\"\n" +
-    "             ng-false-value=\"'off'\"\n" +
-    "             ng-change=\"incrementToggleCount()\"\n" +
-    "             />\n" +
-    "      Toggle2: {{toggle2}}\n" +
+    "      <rui-chip ng-repeat=\"tag in tags\"\n" +
+    "                name=\"tag.name\"\n" +
+    "                color=\"tag.color\"\n" +
+    "                on-remove=\"removeTag(tag, $index)\">\n" +
+    "      </rui-chip>\n" +
     "    </div>\n" +
-    "    Overall count: {{toggleCount}}\n" +
-    "    <input type=\"submit\" value=\"submit\"/>\n" +
-    "  </form>\n" +
+    "  </div>\n" +
     "\n" +
-    "  <h2>Spinner</h2>\n" +
     "  <div>\n" +
-    "    <rui-fullscreen-spinner text=\"spinnerText\" top=\"30px\" left=\"90px\" ng-show=\"showFullScreenSpinner\"></rui-fullscreen-spinner>\n" +
-    "    <button ng-click=\"glimpseFullScreenSpinner()\">show fullscreen spinner</button>\n" +
+    "    <h2 class=\"page-header\">Tags: <code>rui-chip</code></h2>\n" +
+    "    <rui-button ng-click=\"addTag()\">Add Tag</rui-button>\n" +
+    "    <div>\n" +
+    "      <rui-chip ng-repeat=\"tag in tags\"\n" +
+    "                name=\"tag.name\"\n" +
+    "                color=\"tag.color\"\n" +
+    "                on-remove=\"removeTag(tag, $index)\">\n" +
+    "      </rui-chip>\n" +
+    "    </div>\n" +
     "  </div>\n" +
     "  <div>\n" +
-    "    <rui-spinner ng-show=\"showInlineSpinner\" fullscreen></rui-spinner>\n" +
-    "    <button ng-click=\"showInlineSpinner = !showInlineSpinner\">toggle inline spinner</button>\n" +
+    "    <h2 class=\"page-header\">Toggles: <code>rui-toggle</code></h2>\n" +
+    "    <form name=\"toggleTestForm\" ng-submit=\"logToggle()\" novalidate>\n" +
+    "      <div>\n" +
+    "        <label>Disable next toggle?</label>\n" +
+    "        <input rui-toggle\n" +
+    "               type=\"checkbox\"\n" +
+    "               id=\"toggle1\"\n" +
+    "               name=\"toggle1\"\n" +
+    "               ng-model=\"toggle1\"\n" +
+    "               ng-change=\"incrementToggleCount()\"\n" +
+    "               />\n" +
+    "        Toggle1: {{toggle1}}\n" +
+    "\n" +
+    "      </div>\n" +
+    "      <div>\n" +
+    "        <label>Test toggle 2: </label>\n" +
+    "        <input rui-toggle\n" +
+    "               type=\"checkbox\"\n" +
+    "               id=\"toggle2\"\n" +
+    "               name=\"toggle2\"\n" +
+    "               ng-model=\"toggle2\"\n" +
+    "               on-text=\"on\"\n" +
+    "               off-text=\"off\"\n" +
+    "               ng-disabled=\"toggle1\"\n" +
+    "               ng-true-value=\"'on'\"\n" +
+    "               ng-false-value=\"'off'\"\n" +
+    "               ng-change=\"incrementToggleCount()\"\n" +
+    "               />\n" +
+    "        Toggle2: {{toggle2}}\n" +
+    "      </div>\n" +
+    "      Toggles: {{toggleCount}}\n" +
+    "    </form>\n" +
+    "\n" +
+    "  </div>\n" +
+    "  <div>\n" +
+    "    <h2 class=\"page-header\">Spinner: <code>rui-spinner</code></h2>\n" +
+    "      <p>Use the spinner to indicate work in progress. You can toggle it with ng-show. There is an inline version and a fullscreen version. The fullscreen version takes <code>top</code> and <code>left</code> attributes to indicate an offset so you can leave navigation exposed.</p>\n" +
+    "      <rui-button ng-click=\"glimpseFullScreenSpinner()\">show fullscreen spinner</rui-button>\n" +
+    "      <rui-fullscreen-spinner text=\"spinnerText\" ng-show=\"showFullScreenSpinner\"></rui-fullscreen-spinner>\n" +
+    "      <br>\n" +
+    "\n" +
+    "      <rui-button ng-click=\"showInlineSpinner = !showInlineSpinner\">toggle inline spinner</rui-button>\n" +
+    "      <br>\n" +
+    "      <rui-spinner ng-show=\"showInlineSpinner\" fullscreen></rui-spinner>\n" +
     "  </div>\n" +
     "\n" +
     "</div>\n"
