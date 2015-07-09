@@ -454,15 +454,6 @@ angular.module('ruiComponents').run(['$templateCache', function($templateCache) 
     "                 show-contact=\"true\">\n" +
     "      </rui-alert>\n" +
     "    </div>\n" +
-    "    <h2>Tags</h2>\n" +
-    "    <button ng-click=\"addTag()\">Add Tag</button>\n" +
-    "    <div>\n" +
-    "      <rui-chip ng-repeat=\"tag in tags\"\n" +
-    "                name=\"tag.name\"\n" +
-    "                color=\"tag.color\"\n" +
-    "                on-remove=\"removeTag(tag, $index)\">\n" +
-    "      </rui-chip>\n" +
-    "    </div>\n" +
     "  </div>\n" +
     "\n" +
     "  <div>\n" +
