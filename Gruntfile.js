@@ -27,7 +27,7 @@ module.exports = function(grunt) {
 			html: {
 				files: [{
 					expand: true,
-					cwd: '.',
+					cwd: 'src',
 					src: ['index.html', '!templates/**/*'],
 					dest: '.tmp/'
 				}]
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
 			options: {
 			},
 			app: {
-				src: 'index.html'
+				src: 'src/index.html'
 			},
 			sass: {
 				src: ['src/styles/{,*/}*.{scss,sass}'],
@@ -131,7 +131,7 @@ module.exports = function(grunt) {
 	  		tasks: ['compass:server'],
 	  	},
 	  	html: {
-	  		files: ['index.html'],
+	  		files: ['src/index.html'],
 	  		tasks: ['copy:html']
 	  	},
 	  	livereload: {
