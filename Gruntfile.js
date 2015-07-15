@@ -55,6 +55,14 @@ module.exports = function(grunt) {
 					src: 'templates.js',
 					dest: 'dst/js/templates.js'
 				}]
+			},
+			ghpages: {
+				files: [{
+					expand: true,
+					cwd: '.tmp',
+					src:['**/*'],
+					dest: 'ghpages'
+				}]
 			}
 		},
 
@@ -82,6 +90,10 @@ module.exports = function(grunt) {
 			sass: {
 				src: ['src/styles/{,*/}*.{scss,sass}'],
 				ignorePath: 'bower_components/'
+			},
+			ghpages:{
+				ignorePath: '../',
+				src: 'ghpages/index.html'
 			}
 		},
 
@@ -213,6 +225,15 @@ module.exports = function(grunt) {
 	  		}]
 	  	}
 	  },
+		git_deploy: {
+			your_target: {
+				options: {
+					url: 'https://github.com/100health/rui-components.git',
+					branch: 'gh-pages'
+				},
+				src: 'ghpages'
+			},
+		},
 
 	});
 
@@ -241,6 +262,25 @@ module.exports = function(grunt) {
 			'imagemin:dist',
 			'svgmin:dist',
 			'uglify',
+		]);
+	});
+
+	grunt.registerTask('ghpages', 'Builds then pushes to gh-pages branch', function () {
+		grunt.task.run([
+			'clean:tmp',
+			'clean:dist',
+			'copy',
+			'ngtemplates',
+			'concat',
+			'ngAnnotate',
+			'compass:server',
+			'cssmin:dist',
+			'imagemin:dist',
+			'svgmin:dist',
+			'uglify',
+			'copy:ghpages',
+			'wiredep:ghpages',
+			'git_deploy'
 		]);
 	});
 
