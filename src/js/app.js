@@ -94,4 +94,31 @@ angular.module('ruiComponents')
       }, 3000);
     };
 
+    // Sidenav
+    $scope.sidenavData = {
+        style: 'Navbar',
+        breadcrumb:{
+          state: 'devtools.index',
+          title: 'Dev Tools'
+        },
+        sections:[
+          {
+            title: 'Application',
+            state: 'dashboard.organization.index({orgId: session.organization.id})',
+            icon: 'ion-monitor'
+          },{
+            title: 'Settings',
+            state: 'dashboard.organization.index({orgId: session.organization.id})',
+            icon: 'ion-settings',
+            hide: '!session.currentUser().admin'
+          },{
+            title: 'FAQ',
+            href: 'http://faq.redoxengine.com',
+            icon: 'ion-help-circled'
+          }
+        ]
+      }
+
+
+
   }]);
