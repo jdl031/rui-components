@@ -1,4 +1,4 @@
-angular.module('ruiComponents', ['mgcrea.ngStrap']);
+angular.module('ruiComponents', ['truncate', 'mgcrea.ngStrap']);
 
 angular.module('ruiComponents')
   .controller('ruiAppController', ['$scope', function($scope){
@@ -96,28 +96,30 @@ angular.module('ruiComponents')
 
     // Sidenav
     $scope.sidenavData = {
-        style: 'Navbar',
-        breadcrumb:{
-          state: 'devtools.index',
-          title: 'Dev Tools'
-        },
-        sections:[
-          {
-            title: 'Application',
-            state: 'dashboard.organization.index({orgId: session.organization.id})',
-            icon: 'ion-monitor'
-          },{
-            title: 'Settings',
-            state: 'dashboard.organization.index({orgId: session.organization.id})',
-            icon: 'ion-settings',
-            hide: '!session.currentUser().admin'
-          },{
-            title: 'FAQ',
-            href: 'http://faq.redoxengine.com',
-            icon: 'ion-help-circled'
-          }
-        ]
-      }
+      style: 'Navbar',
+      breadcrumb:{
+        state: 'devtools.index',
+        title: 'Dev Tools',
+        previousState: 'application.index',
+        previousStateTitle: 'My App'
+      },
+      sections:[
+        {
+          title: 'Application',
+          state: 'dashboard.organization.index({orgId: session.organization.id})',
+          icon: 'ion-monitor'
+        },{
+          title: 'Settings',
+          state: 'dashboard.organization.index',
+          icon: 'ion-settings',
+          hide: false    //'!session.currentUser().admin'
+        },{
+          title: 'FAQ',
+          href: 'http://faq.redoxengine.com',
+          icon: 'ion-help-circled'
+        }
+      ]
+    }
 
 
 

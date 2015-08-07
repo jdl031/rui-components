@@ -1,4 +1,4 @@
-angular.module('ruiComponents', ['mgcrea.ngStrap']);
+angular.module('ruiComponents', ['truncate', 'mgcrea.ngStrap']);
 
 angular.module('ruiComponents')
   .controller('ruiAppController', ['$scope', function($scope){
@@ -93,6 +93,35 @@ angular.module('ruiComponents')
         $scope.$apply();
       }, 3000);
     };
+
+    // Sidenav
+    $scope.sidenavData = {
+      style: 'Navbar',
+      breadcrumb:{
+        state: 'devtools.index',
+        title: 'Dev Tools',
+        previousState: 'application.state',
+        previousStateTitle: 'My App'
+      },
+      sections:[
+        {
+          title: 'Application',
+          state: 'dashboard.organization.index({orgId: session.organization.id})',
+          icon: 'ion-monitor'
+        },{
+          title: 'Settings',
+          state: 'dashboard.organization.index({orgId: session.organization.id})',
+          icon: 'ion-settings',
+          hide: 'false'    //'!session.currentUser().admin'
+        },{
+          title: 'FAQ',
+          href: 'http://faq.redoxengine.com',
+          icon: 'ion-help-circled'
+        }
+      ]
+    }
+
+
 
   }]);
 
@@ -250,6 +279,77 @@ app.directive('ruiHelptext', ['$compile', function ($compile) {
 	};
 }]);
 
+var app = angular.module('ruiComponents');
+
+app.directive('ruiEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
+
+
+/*
+Data Structure for Side Nav
+
+Sidenavs come in 1 form: 'Navbar'
+
+Example 1: Navbar
+
+data = {
+  style: 'Navbar',
+  breadcrumb:{
+    state: 'devtools.index',
+    title: 'Dev Tools',
+    previousState: 'application.state',
+    previousStateTitle: 'My App'
+  },
+  sections:[
+    {
+      title: 'Application',
+      state: 'dashboard.organization.index({orgId: session.organization.id})',
+      icon: 'ion-monitor'
+    },{
+      title: 'Settings',
+      state: 'dashboard.organization.index({orgId: session.organization.id})',
+      icon: 'ion-settings',
+      hide: '!session.currentUser().admin'
+    },{
+      title: 'FAQ',
+      href: 'http://faq.redoxengine.com',
+      icon: 'ion-help-circled'
+    }
+  ]
+}
+
+ For Table of Contents style navbars, (As used in Redox Docs/DataModels) Holding off for now - waiting for additional use cases.
+
+*/
+
+var app = angular.module('ruiComponents');
+
+
+app.directive('ruiSidenav', ['$compile', function ($compile) {
+	return {
+		restrict: 'AE',
+		scope: {
+      data: '='
+    },
+    link: function(scope, element, attrs, ctrl, linker){
+      console.log(scope)
+      scope.sidenavData = scope.data;
+			element.append('<div ng-include="\'templates/sidenav.html\'"></div>');
+			$compile(element.contents())(scope);
+    }
+	};
+}]);
 
 var app = angular.module('ruiComponents');
 
@@ -503,7 +603,6 @@ angular.module('ruiComponents').run(['$templateCache', function($templateCache) 
     "\n" +
     "  </div>\n" +
     "  <div>\n" +
-    "    <h2 class=\"page-header\">Spinner: <code>rui-spinner</code></h2>\n" +
     "      <p>Use the spinner to indicate work in progress. You can toggle it with ng-show. There is an inline version and a fullscreen version. The fullscreen version takes <code>top</code> and <code>left</code> attributes to indicate an offset so you can leave navigation exposed.</p>\n" +
     "      <rui-button ng-click=\"glimpseFullScreenSpinner()\">show fullscreen spinner</rui-button>\n" +
     "      <rui-fullscreen-spinner text=\"spinnerText\" ng-show=\"showFullScreenSpinner\"></rui-fullscreen-spinner>\n" +
@@ -513,6 +612,21 @@ angular.module('ruiComponents').run(['$templateCache', function($templateCache) 
     "      <br>\n" +
     "      <rui-spinner ng-show=\"showInlineSpinner\" fullscreen></rui-spinner>\n" +
     "  </div>\n" +
+    "\n" +
+    "  <style media=\"screen\">\n" +
+    "    /* Hack the sidebar into place. */\n" +
+    "    rui-sidenav .rui-sidenav{\n" +
+    "      position: static !important;\n" +
+    "    }\n" +
+    "  </style>\n" +
+    "\n" +
+    "  <div>\n" +
+    "    <h2 class=\"page-header\">Sidenav: <code>rui-sidenav</code></h2>\n" +
+    "    <p></p>\n" +
+    "    <rui-sidenav data=\"sidenavData\">\n" +
+    "    </rui-sidenav>\n" +
+    "  </div>\n" +
+    "\n" +
     "\n" +
     "</div>\n"
   );
@@ -543,7 +657,7 @@ angular.module('ruiComponents').run(['$templateCache', function($templateCache) 
     "\n" +
     "  <div class=\"card-box\" id=\"inputCard\" ng-show=\"editing\">\n" +
     "    <div class=\"card-box-text\">\n" +
-    "      <input type=\"text\" ng-model=\"createinput\" id=\"createinput\" name=\"createinput\" autofocus=\"true\"></input>\n" +
+    "      <input type=\"text\" ng-model=\"createinput\" id=\"createinput\" name=\"createinput\" autofocus=\"true\" rui-enter=\"create()\"></input>\n" +
     "    </div>\n" +
     "    <div class=\"create-container\">\n" +
     "      <a ng-click=\"create()\">Create</a>\n" +
@@ -605,6 +719,29 @@ angular.module('ruiComponents').run(['$templateCache', function($templateCache) 
 
   $templateCache.put('templates/select.html',
     ""
+  );
+
+
+  $templateCache.put('templates/sidenav.html',
+    "<div class='rui-sidenav'>\n" +
+    "  <perfect-scrollbar class=\"sidenav\">\n" +
+    "    <div class=\"breadcrumbs\">\n" +
+    "      <a ng-if=\"sidenavData.breadcrumb.previousState\" ui-sref=\"{{sidenavData.breadcrumb.previousState}}\">{{sidenavData.breadcrumb.previousStateTitle | characters:11}}</a>\n" +
+    "\t\t\t<span ng-if=\"sidenavData.breadcrumb.previousState\" class=\"ion-android-arrow-forward\"></span>\n" +
+    "  \t\t<a ui-sref=\"{{sidenavData.breadcrumb.state}}\">{{sidenavData.breadcrumb.title | characters:11}}</a>\n" +
+    "  \t</div>\n" +
+    "    <ul>\n" +
+    "      <li ng-repeat=\"section in sidenavData.sections\" ng-hide=\"section.hide\" ng-class=\"$state.name === '{{section.state}}' ? 'active' :''\">\n" +
+    "        <a ng-if=\"section.state && !section.href\" ui-sref=\"{{section.state}}\">\n" +
+    "          <span class=\"{{section.icon}}\">&nbsp;&nbsp;&nbsp;{{section.title}}</span>\n" +
+    "        </a>\n" +
+    "        <a ng-if=\"section.href && !section.state\" ng-hide=\"section.hide\">\n" +
+    "          <span class=\"{{section.icon}}\">&nbsp;&nbsp;&nbsp;{{section.title}}</span>\n" +
+    "        </a>\n" +
+    "      </li>\n" +
+    "    </ul>\n" +
+    "  </perfect-scrollbar>\n" +
+    "</div>\n"
   );
 
 

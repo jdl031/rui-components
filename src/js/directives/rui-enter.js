@@ -1,6 +1,6 @@
 var app = angular.module('ruiComponents');
 
-app.directive('ngEnter', function () {
+app.directive('ruiEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
             if(event.which === 13) {
