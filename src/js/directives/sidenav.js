@@ -52,7 +52,6 @@ app.directive('ruiSidenav', ['$compile', function ($compile) {
           scope.sidenavData.sections[i].statename = scope.sidenavData.sections[i].state.toString().split("(")[0];
         }
       }
-      console.log(scope)
       element.append('<div ng-include="\'templates/sidenav.html\'"></div>');
       $compile(element.contents())(scope);
     }
