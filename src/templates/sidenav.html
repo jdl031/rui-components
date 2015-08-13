@@ -1,0 +1,19 @@
+<div class='rui-sidenav'>
+  <perfect-scrollbar class="sidenav">
+    <div class="breadcrumbs">
+      <a ng-if="sidenavData.breadcrumb.previousState" ui-sref="{{sidenavData.breadcrumb.previousState}}">{{sidenavData.breadcrumb.previousStateTitle | characters:11}}</a>
+      <span ng-if="sidenavData.breadcrumb.previousState" class="ion-android-arrow-forward"></span>
+      <a ui-sref="{{sidenavData.breadcrumb.state}}">{{sidenavData.breadcrumb.title | characters:11}}</a>
+    </div>
+    <ul>
+      <li ng-repeat="section in sidenavData.sections" ng-hide="section.hide" ng-class="$state.name === '{{section.statename}}' ? 'active' :''">
+        <a ng-if="section.state && !section.href" ui-sref="{{section.state}}">
+          <span class="{{section.icon}}">&nbsp;&nbsp;&nbsp;{{section.title}}</span>
+        </a>
+        <a ng-if="section.href && !section.state" ng-hide="section.hide">
+          <span class="{{section.icon}}">&nbsp;&nbsp;&nbsp;{{section.title}}</span>
+        </a>
+      </li>
+    </ul>
+  </perfect-scrollbar>
+</div>

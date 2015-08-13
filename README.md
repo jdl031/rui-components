@@ -11,6 +11,7 @@ A set of angular directives for use in RedoxEngine
 * Clone the repo
 * `grunt serve` will boot up the app with livereload
 * `grunt build` will build everything into the `dst` directory
+* `grunt ghpages` will build the rui-components/ghpages directory and automatically commit that to the gh-pages branch to be served up [on github pages](http://100health.github.io/rui-components/).
 
 ### General Public
 * Fork the repo

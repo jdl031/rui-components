@@ -171,7 +171,6 @@
 
   </div>
   <div>
-    <h2 class="page-header">Spinner: <code>rui-spinner</code></h2>
       <p>Use the spinner to indicate work in progress. You can toggle it with ng-show. There is an inline version and a fullscreen version. The fullscreen version takes <code>top</code> and <code>left</code> attributes to indicate an offset so you can leave navigation exposed.</p>
       <rui-button ng-click="glimpseFullScreenSpinner()">show fullscreen spinner</rui-button>
       <rui-fullscreen-spinner text="spinnerText" ng-show="showFullScreenSpinner"></rui-fullscreen-spinner>
@@ -181,5 +180,20 @@
       <br>
       <rui-spinner ng-show="showInlineSpinner" fullscreen></rui-spinner>
   </div>
+
+  <style media="screen">
+    /* Hack the sidebar into place. */
+    rui-sidenav .rui-sidenav{
+      position: static !important;
+    }
+  </style>
+
+  <div>
+    <h2 class="page-header">Sidenav: <code>rui-sidenav</code></h2>
+    <p></p>
+    <rui-sidenav data="sidenavData">
+    </rui-sidenav>
+  </div>
+
 
 </div>

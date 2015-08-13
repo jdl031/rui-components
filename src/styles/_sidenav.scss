@@ -1,0 +1,83 @@
+.rui-sidenav {
+  position: fixed;
+  overflow: hidden;
+  width: $sidenav-width;
+  height: calc(100vh - #{$header-height} - #{$footer-height});
+  background-color: $darkgrey;
+  color: $lightgrey;
+  .breadcrumbs{
+    background-color: $verydarkgrey;
+    color: $lightgrey;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    a{
+      color: $lightgrey;
+      text-decoration: none;
+    }
+    a:hover{
+      color: $green;
+      cursor: pointer;
+    }
+  }
+  ul {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style-type: none;
+    -webkit-padding-start: 0px !important;
+    li {
+      text-decoration: none;
+      border-top-color: $verydarkgrey;
+      border-top-style: solid;
+      border-top-width: 1px;
+      font-size: 16px;
+      a {
+        display: inline-block;
+        width: 100%;
+        padding-left: 30px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        color: $lightgrey;
+        text-decoration: none;
+        span {
+          //so we dont double pad
+          padding-left: 0;
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+      }
+      a:hover {
+        background-color: $green;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      //if you want to remove the anchor tag, add a span
+      span {
+        display:inline-block;
+        width: 100%;
+        padding-left: 30px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        color: $lightgrey;
+        text-decoration: none;
+      }
+      .coming-soon {
+        font-style: italic;
+      }
+      ul li a {
+        padding-left: 60px;
+      }
+    }
+    li.active {
+      background-color: $darkgreen;
+      text-decoration: none;
+      span{
+        color: $white;
+      }
+    }
+    li.nav-parent.active ul li{
+      background-color: $verydarkgrey;
+    }
+  }
+}
